@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     {
         switch(opt){
         case 'h': {
-            printf("This is demo help. Try -h or --help.\n");
+            printf("httpc [-h] <uri>\n");
             exit(EXIT_SUCCESS);
             break;
         }
