@@ -6,13 +6,19 @@
 typedef struct downloader_ctx downloader_ctx;
 
 downloader_ctx *
-create_downloader(const char * uri);
+create_downloader(
+    const char * uri
+);
 
 void
-delete_downloader(downloader_ctx * ctx);
+delete_downloader(
+    downloader_ctx * ctx
+);
 
 void
-downloader_start(downloader_ctx * ctx);
+downloader_start(
+    downloader_ctx * ctx
+);
 
 
 

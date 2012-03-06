@@ -17,7 +17,11 @@ on_connected(
 }
 
 
-int main(int argc, char *argv[])
+int
+main(
+    int argc,
+    char *argv[]
+)
 {
     char opt;
     int option_index;

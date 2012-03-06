@@ -2,10 +2,28 @@
 #include <stdlib.h>
 
 typedef struct yy_buffer_state yy_buffer_state;
-extern int yyparse (char** scheme, char** host, char** port, char** path);
-extern yy_buffer_state* yy_scan_string(const char *);
 
-int parse_uri(char** scheme_out, char** host_out, char** port_out, char** path_out, const char* uri)
+extern int
+yyparse (
+    char** scheme,
+    char** host,
+    char** port,
+    char** path
+);
+
+extern yy_buffer_state*
+yy_scan_string(
+    const char *
+);
+
+int
+parse_uri(
+    char** scheme_out,
+    char** host_out,
+    char** port_out,
+    char** path_out,
+    const char* uri
+)
 {
     int rc = 0;
     size_t uri_length = strlen(uri);

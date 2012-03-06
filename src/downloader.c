@@ -12,7 +12,11 @@ typedef struct downloader_ctx {
 } downloader_ctx;
 
 void
-downloader_on_event(downloader_ctx *ctx, int event_code, machine_event * event);
+downloader_on_event(
+    downloader_ctx *ctx,
+    int event_code,
+    machine_event * event
+);
 
 enum downloader_state_codes {
     INITIALIZED
@@ -34,25 +38,34 @@ state downloader_states[] = {
 
 
 downloader_ctx *
-create_downloader(const char * uri)
+create_downloader(
+    const char * uri
+)
 {
     downloader_ctx *ctx =
         (downloader_ctx*)malloc(sizeof(downloader_ctx));
 
     ctx->uri = strdup(uri);
+    ctx->current_state = INITIALIZED;
 
     return ctx;
 }
 
 void
-delete_downloader(downloader_ctx * ctx)
+delete_downloader(
+    downloader_ctx * ctx
+)
 {
     free(ctx->uri);
     free(ctx);
 }
 
 void
-downloader_on_event(downloader_ctx *ctx, int event_code, machine_event * event)
+downloader_on_event(
+    downloader_ctx *ctx,
+    int event_code,
+    machine_event * event
+)
 {
     int state_idx;
 
@@ -68,14 +81,20 @@ downloader_on_event(downloader_ctx *ctx, int event_code, machine_event * event)
 }
 
 void
-downloader_start(downloader_ctx* ctx)
+downloader_start(
+    downloader_ctx* ctx
+)
 {
     downloader_start_event event;
 
     downloader_on_event(ctx, START, (machine_event*)&event);
 }
 
-int dl_initialized_start(machine_ctx* ctx, machine_event* event)
+int
+dl_initialized_start(
+    machine_ctx* ctx,
+    machine_event* event
+)
 {
 
 }
