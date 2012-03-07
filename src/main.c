@@ -75,7 +75,12 @@ main(
     else
         printf("scheme: %s, host: %s, port: %s, path: %s\n", scheme, host, port, path);
 
+    dns_service *dnss = create_dns_service();
+
     rc = connect_to_host(host, atoi(port), on_connected, 0);
+
+    delete_dns_service(dnss);
+
 
     exit(EXIT_SUCCESS);
 }

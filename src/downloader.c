@@ -9,6 +9,7 @@
 typedef struct downloader_ctx {
     int current_state;
     char* uri;
+    int sock;
 } downloader_ctx;
 
 void
@@ -96,5 +97,4 @@ dl_initialized_start(
     machine_event* event
 )
 {
-
 }
