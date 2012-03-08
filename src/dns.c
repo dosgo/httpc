@@ -118,7 +118,6 @@ create_dns_service(void)
         service->response_pipe = response_pipe[0];
 
         service->child_pid = rc;
-        write(service->request_pipe, "foobar\nb\1az\nsdaf\n", strlen("foobar\nb\1az\nsdaf\n"));
     }
 
     goto on_success;
