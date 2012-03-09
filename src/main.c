@@ -6,6 +6,7 @@
 
 #include "uri.h"
 #include "dns.h"
+#include "registry.h"
 
 void
 on_connected(
@@ -75,12 +76,20 @@ main(
     else
         printf("scheme: %s, host: %s, port: %s, path: %s\n", scheme, host, port, path);
 
+
+
+    registry *reg = create_registry();
     dns_service *dnss = create_dns_service();
+
+    register_service(reg, (service_ctx*)dnss);
+
+
+    resolve_host(dnss, host);
 
     rc = connect_to_host(host, atoi(port), on_connected, 0);
 
     delete_dns_service(dnss);
-
+    delete_registry(reg);
 
     exit(EXIT_SUCCESS);
 }

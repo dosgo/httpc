@@ -12,6 +12,7 @@ set(LibHttp_SRC
   src/dns.c
   src/uri.c
   src/downloader.c
+  src/registry.c
   ${FLEX_Scanner_OUTPUTS}
   ${BISON_Parser_OUTPUTS}
   )

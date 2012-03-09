@@ -22,4 +22,10 @@ typedef struct connection_ctx connection_ctx;
 typedef void (*connection_callback)(int fd, connection_ctx* ctx);
 
 
+void
+resolve_host(
+    dns_service*,
+    const char* host
+);
+
 #endif
