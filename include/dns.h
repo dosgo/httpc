@@ -16,6 +16,10 @@ delete_dns_service(
     dns_service*
 );
 
+int
+get_dns_fd(
+    dns_service*
+);
 
 typedef struct connection_ctx connection_ctx;
 

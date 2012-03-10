@@ -1,40 +1,43 @@
 #ifndef Httpc_registry_h
 #define Httpc_registry_h
 
-typedef struct registry registry;
 
 typedef struct service service;
-
-typedef struct service_ctx service_ctx;
+typedef struct registry registry;
+typedef void (*service_callback)(void*, int);
 
 registry *
 create_registry();
 
 void
 delete_registry(
-    registry*
+    void*
 );
 
-service *
+void
 register_service(
     registry *,
-    service_ctx *
+    void *,
+    service_callback
 );
 
 void
 unregister_service(
-    service*
+    registry*,
+    void*
 );
 
 void
 service_watch_fd(
-    service *,
+    registry*,
+    void *,
     int
 );
 
 void
 service_unwatch_fd(
-    service *,
+    registry*,
+    void *,
     int
 );
 

@@ -26,6 +26,14 @@ typedef struct dns_service
     dns_request *requests;
 } dns_service;
 
+int
+get_dns_fd(
+    dns_service* svc
+)
+{
+    return svc->response_pipe;
+}
+
 
 void
 dns_resolve(FILE * response, const char * host)
@@ -51,6 +59,7 @@ dns_resolve(FILE * response, const char * host)
         rc = -1;
         goto on_error;
     }
+    printf("RESOLVED\n");
 
     for (;addr != NULL; addr = addr->ai_next)
     {
@@ -58,6 +67,7 @@ dns_resolve(FILE * response, const char * host)
         ptr = &((struct sockaddr_in *) addr->ai_addr)->sin_addr;
         inet_ntop (addr->ai_family, ptr, addrstr, 16);
 
+        printf("host: %s, addr: %s\n", host, addrstr);
         fprintf(response, "%s\1%s\n", host, addrstr);
     }
 
@@ -76,6 +86,8 @@ dns_resolve_loop(dns_service* service)
     ssize_t read;
     FILE *req = fdopen(service->request_pipe, "r");
     FILE *res = fdopen(service->response_pipe, "w");
+
+    printf("RP: %d\n", res);
 
     int pollfd = epoll_create(1);
     int nfds = 0;
@@ -98,6 +110,7 @@ dns_resolve_loop(dns_service* service)
     while(1)
     {
         nfds = epoll_wait(pollfd, events, 1, -1);
+
         if (nfds == -1) {
             perror("epoll_wait");
             exit(EXIT_FAILURE);
@@ -105,7 +118,9 @@ dns_resolve_loop(dns_service* service)
 
         while ((read = getline(&line, &len, req)) != -1)
         {
+            line[strlen(line)-1] = '\0';
             dns_resolve(res, line);
+            fflush(res);
 
             free(line);
             len = 0;
@@ -195,9 +210,14 @@ resolve_host(
     int host_length = strlen(host);
     char * nl_host = (char*)malloc(host_length + 2);
 
+    printf("HOST: %s\n", host);
+
     sprintf(nl_host, "%s\n", host);
 
-    write(service->request_pipe, host, strlen(host));
+    printf("HOST: %s\n", nl_host);
+
+
+    write(service->request_pipe, nl_host, strlen(nl_host));
 
     free(nl_host);
 }
